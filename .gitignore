@@ -1,0 +1,19 @@
+# local instantiation
+venv/
+
+# latex
+*.aux
+*.fdb*
+*.bbl
+*.blg
+*.brf
+*.fls
+*.log
+*.synctex.gz
+*.tex
+
+# other ignores
+data/
+
+# notebook checkpoints
+.ipynb_checkpoints
