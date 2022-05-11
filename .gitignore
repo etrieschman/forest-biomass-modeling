@@ -9,8 +9,8 @@ venv/
 *.brf
 *.fls
 *.log
+*.out
 *.synctex.gz
-*.tex
 
 # other ignores
 data/
