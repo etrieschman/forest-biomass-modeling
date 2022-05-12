@@ -62,22 +62,20 @@ def get_modis_meshgrid(hdf, data):
 
 
 def readin_fis_biomass(filepath):
-    
+    # read in file
     try:
         tree = ET.parse(filepath)
     except:
         print(f'could not load file, {filepath}')
         return pd.DataFrame()
     
-    root = tree.getroot()
-
     # get all reports from root
+    root = tree.getroot()
     reports = []
     report_attribs = []
     for x in root.iter('Row'):
         reports.append(x)
         report_attribs.append(x.attrib)
-
 
     # get all items from each report, save to dataframe
     attribs = pd.DataFrame()
