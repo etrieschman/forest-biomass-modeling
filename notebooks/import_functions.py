@@ -71,8 +71,8 @@ def get_modis_meshgrid(hdf, data):
     return xv, yv
 
 # contiguous US mask
-min_lat, max_lat = 20, 48
-min_lon, max_lon = -140, -60
+min_lat, max_lat = 24, 49
+min_lon, max_lon = -126, -66
 min_y, max_y = 996, 1675
 min_x, max_x = 940, 2884
 
@@ -83,11 +83,17 @@ def readin_and_subset_modis(folderpath, prop_str, suffix='.hdf', ds_start=9, ds_
     
     # loop through all
     pdfs = pd.DataFrame(columns=('lat', 'lon', 'date_str', 'prop'))
+    failed_loads = []
     for f in tqdm(filenames[0:5]):
     # for f in tqdm(filenames):
 
         # read file
-        prop, hdf = get_modis_filedata(path=folderpath / f, datafield=prop_str)
+        try:
+            prop, hdf = get_modis_filedata(path=folderpath / f, datafield=prop_str)
+        except:
+            failed_loads += [f]
+            continue
+        
         # get lat/lon
         xv, yv = get_modis_meshgrid(hdf, prop)
         lon, lat = xv / 10e5, yv / 10e5
@@ -103,7 +109,7 @@ def readin_and_subset_modis(folderpath, prop_str, suffix='.hdf', ds_start=9, ds_
         pdf['date_str'] = f[ds_start:ds_start+ds_len]
         pdfs = pd.concat([pdfs, pdf])
     
-    return pdfs  
+    return pdfs, failed_loads
 
 
 def readin_fis_biomass(filepath):
