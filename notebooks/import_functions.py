@@ -2,17 +2,27 @@ from pyhdf.SD import SD, SDC
 import numpy as np
 import pandas as pd
 import re
+import os
 import xml.etree.ElementTree as ET
+from tqdm import tqdm
+
+# get filenames
+def get_folder_contents(path, suffix):
+    files = [f for f in os.listdir(path) 
+               if f.endswith(suffix)]
+    files.sort()
+    print('files to read:', len(files))
+    return files
 
 def get_modis_filedata(path, datafield):
-    hdf = SD(path, SDC.READ)  
+    hdf = SD(path=str(path), mode=SDC.READ)  
     hdf_dict = hdf.datasets()
     # get keys in dictionary
     # for idx,sds in enumerate(hdf_dict.keys()):
     #     print (idx,sds)
     
     # get the object i want
-    sds_obj = hdf.select('LST_Day_CMG') # select sds  
+    sds_obj = hdf.select(datafield) # select sds  
     data = sds_obj.get()               # get sds data
 
     data2D = hdf.select(datafield)
@@ -59,6 +69,41 @@ def get_modis_meshgrid(hdf, data):
     # wgs84 = pyproj.Proj("+init=EPSG:4326")
     # lon, lat= pyproj.transform(sinu, wgs84, xv, yv)
     return xv, yv
+
+# contiguous US mask
+min_lat, max_lat = 20, 48
+min_lon, max_lon = -140, -60
+min_y, max_y = 996, 1675
+min_x, max_x = 940, 2884
+
+def readin_and_subset_modis(folderpath, prop_str, suffix='.hdf', ds_start=9, ds_len=7):
+    
+    # get all files
+    filenames = get_folder_contents(folderpath, suffix)
+    
+    # loop through all
+    pdfs = pd.DataFrame(columns=('lat', 'lon', 'date_str', 'prop'))
+    for f in tqdm(filenames[0:5]):
+    # for f in tqdm(filenames):
+
+        # read file
+        prop, hdf = get_modis_filedata(path=folderpath / f, datafield=prop_str)
+        # get lat/lon
+        xv, yv = get_modis_meshgrid(hdf, prop)
+        lon, lat = xv / 10e5, yv / 10e5
+        # stack data
+        lat, lon, prop = lat.reshape(-1), lon.reshape(-1), prop.reshape(-1)
+        df_prop = np.array([lat, lon, prop]).T
+        # subset data
+        df_sub = df_prop
+        df_sub = df_sub[(df_sub[:,1] >= min_lon) & (df_sub[:,1] <= max_lon),:]
+        df_sub = df_sub[(df_sub[:,0] >= min_lat) & (df_sub[:,0] <= max_lat),:]
+        # make dataframe
+        pdf = pd.DataFrame(df_sub, columns=('lat', 'lon', 'prop'))
+        pdf['date_str'] = f[ds_start:ds_start+ds_len]
+        pdfs = pd.concat([pdfs, pdf])
+    
+    return pdfs  
 
 
 def readin_fis_biomass(filepath):
