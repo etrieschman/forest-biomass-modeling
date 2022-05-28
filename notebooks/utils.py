@@ -9,6 +9,7 @@ DATA_PATH = REPO_PATH / 'data/'
 DATA_CLEAN_PATH = DATA_PATH / 'clean/'
 GEO_CRS = 'epsg:4326'
 PROJ_CRS = '+proj=cea'
+PROJ_AREA_CRS = 'epsg:5070'
 
 
 # chart settings
