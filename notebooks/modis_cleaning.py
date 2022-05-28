@@ -2,12 +2,16 @@ import pandas as pd
 from shapely.geometry import Point, Polygon
 import geopandas as gpd
 
-from constants import GEO_CRS, PROJ_CRS
+from utils import GEO_CRS, PROJ_CRS
 
 def clean_modis(df):
     # make variables
     df['date'] = pd.to_datetime(df.date_str.str[0:7], format='%Y%j')
     df['year'] = df.date.dt.year
+    
+    # drop points with 0 value
+    print(f'Missing values (ocean) dropped: {len(df.loc[df.prop <= 0])} ({len(df.loc[df.prop > 0]) / len(df):0.2%})')
+    df = df.loc[df.prop > 0]
     
     # set outlier as 5 times the 75th percentile
     PCTL, OUTL = 0.75, 3

@@ -84,8 +84,8 @@ def readin_and_subset_modis(folderpath, prop_str, suffix='.hdf', ds_start=9, ds_
     # loop through all
     pdfs = pd.DataFrame(columns=('lat', 'lon', 'date_str', 'prop'))
     failed_loads = []
-    for f in tqdm(filenames[0:5]):
-    # for f in tqdm(filenames):
+#     for f in tqdm(filenames[0:5]):
+    for f in tqdm(filenames):
 
         # read file
         try:
