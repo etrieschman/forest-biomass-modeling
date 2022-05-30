@@ -7,6 +7,7 @@ import pandas as pd
 REPO_PATH = Path('/Users/etriesch/dev/forest-biomass-modeling/')
 DATA_PATH = REPO_PATH / 'data/'
 DATA_CLEAN_PATH = DATA_PATH / 'clean/'
+RESULTS_PATH = REPO_PATH / 'results/'
 GEO_CRS = 'epsg:4326'
 PROJ_CRS = '+proj=cea'
 PROJ_AREA_CRS = 'epsg:5070'
@@ -15,8 +16,8 @@ PROJ_AREA_CRS = 'epsg:5070'
 # chart settings
 def set_plt_settings():
     plt.rcParams.update({'font.size': 18})
-    SMALL_SIZE = 10
-    MEDIUM_SIZE = 14
+    SMALL_SIZE = 12
+    MEDIUM_SIZE = 16
     BIGGER_SIZE = 20
 
     plt.rc('font', size=SMALL_SIZE)          # controls default text sizes

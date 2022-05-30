@@ -1,0 +1,18 @@
+model,params,rmse,mae,r_sq
+DummyRegressor(),{},4556.682892583011,3964.753358046399,-24.786176952352875
+LinearRegression(),{},2216.1510735588136,1736.7798214905984,-1.8069381052925517
+ElasticNet(),"{'alpha': 3600, 'l1_ratio': 0.95}",2403.064378686534,1899.0945719160995,-4.952597798393234
+DecisionTreeRegressor(),"{'max_depth': 10, 'min_samples_leaf': 8}",1968.182629362788,1481.2327129334728,-0.1533498763745194
+RandomForestRegressor(),"{'max_depth': 50, 'min_samples_leaf': 2}",1591.740053962137,1200.9677166423287,0.292745636951481
+"XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, gamma=None,
+             gpu_id=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=None, max_bin=None,
+             max_cat_to_onehot=None, max_delta_step=None, max_depth=None,
+             max_leaves=None, min_child_weight=None, missing=nan,
+             monotone_constraints=None, n_estimators=100, n_jobs=None,
+             num_parallel_tree=None, predictor=None, random_state=None,
+             reg_alpha=None, reg_lambda=None, ...)","{'reg_alpha': 10, 'reg_lambda': 10, 'tree_method': 'approx'}",1592.3528080753913,1206.1580261053602,0.3119019549970868
+MLPRegressor(),"{'hidden_layer_sizes': (4000, 1000)}",5695.053911041783,5158.494785070004,-15.660494092911344
