@@ -1,9 +1,9 @@
 model,params,rmse,mae,r_sq
-DummyRegressor(),{},4407.890839443742,3557.070246854199,-0.001637156161739073
-LinearRegression(),{},1992.0814519849832,1465.448858936113,0.7953213595843195
-ElasticNet(),"{'alpha': 1000, 'l1_ratio': 0.9}",2179.1606847268363,1611.5849988697137,0.7550349270746202
-DecisionTreeRegressor(),"{'max_depth': 10, 'min_samples_leaf': 10}",1705.8486812795352,1138.0301547236863,0.8497380576880287
-RandomForestRegressor(),"{'max_depth': None, 'min_samples_leaf': 2}",1406.3067026433887,923.5198985016157,0.8979401366117482
+DummyRegressor(),{},4399.2372697867595,3554.8521870757468,-0.0018036090764725898
+LinearRegression(),{},2002.370092658481,1470.871966118195,0.7921211049344773
+ElasticNet(),"{'alpha': 1000, 'l1_ratio': 0.9}",2183.512944596982,1612.809044077132,0.7530784328288288
+DecisionTreeRegressor(),"{'max_depth': 10, 'min_samples_leaf': 10}",1750.8610342476318,1164.9512513070251,0.8409842030690177
+RandomForestRegressor(),"{'max_depth': None, 'min_samples_leaf': 2}",1425.7735054452837,937.2267820793901,0.8944563089154098
 "XGBRegressor(base_score=None, booster=None, callbacks=None,
              colsample_bylevel=None, colsample_bynode=None,
              colsample_bytree=None, early_stopping_rounds=None,
@@ -14,6 +14,4 @@ RandomForestRegressor(),"{'max_depth': None, 'min_samples_leaf': 2}",1406.306702
              max_leaves=None, min_child_weight=None, missing=nan,
              monotone_constraints=None, n_estimators=100, n_jobs=None,
              num_parallel_tree=None, predictor=None, random_state=None,
-             reg_alpha=None, reg_lambda=None, ...)","{'reg_alpha': 0.1, 'reg_lambda': 90, 'tree_method': 'hist'}",1433.095860937881,958.3822713748577,0.893837767746225
-MLPRegressor(),"{'hidden_layer_sizes': (4000, 1000)}",1506.3111644564715,1026.6330054999084,0.8827194426067052
-MLPRegressor(),"{'hidden_layer_sizes': (1000, 1000)}",1609.8439449887937,1127.8919581563866,0.8656773277336688
+             reg_alpha=None, reg_lambda=None, ...)","{'reg_alpha': 0.1, 'reg_lambda': 90, 'tree_method': 'hist'}",1478.042833333425,983.1655624827863,0.8867044134638125
