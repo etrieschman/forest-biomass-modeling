@@ -15,6 +15,7 @@ In this research, I compile a dataset of county-level biomass estimates from the
 ### USDA Forest Service data
 Since the late 1930s, the USDA Forest Service has surveyed US forests at the county level through the Forest Inventory and Analysis program (USDA FS FIA). The FIA surveys a forest over 5-7 year periods through a random sampling procedure, and provides panel-county-level forest biomass estimates to the public through an online portal called The Design and Analysis Toolkit for Inventory and Monitoring (DATIM). In this analysis I use the FIA’s estimate of aboveground forest biomass measured in short tons of carbon.
 
+USDA FS aboveground forest biomass (Short tons/km2), in most recent USDA FS panel
 ![USDA FS aboveground forest biomass (Short tons/km2), in most recent USDA FS panel](results/fig_biomass.png)
 
 ### NASA MODIS data
@@ -22,10 +23,13 @@ The NASA MODIS satellite-based sensor is on board two satellites tracking land a
 
 I create a uniform analysis dataset for this research by aggregating NASA MODIS data across space and time. I begin by aggregating MODIS data at the annual level, storing the mean, standard deviation, maximum, and minimum at each pixel. For each property in each pixel-year, I also generate two new metrics: the number of months below the annual mean, and the maximum number of consecutive months below the annual mean. These metrics are meant to help differentiate forests or regions with different dominant trees (e.g. deciduous trees vs. evergreen trees). To relate these estimates to the county-panel level, I then take the mean and standard deviation of all annual-aggregated pixel values in each county. And finally, to map these county-aggregated values to county-panel aggregated values, I take the mean of each property over the panel period (5-7 years, depending on the state). Lastly, I standardize all features for use in statistical models.
 
+NASA MODIS Land Surface Temperature: Mean across county and most recent USDA FS panel (◦C)
 ![NASA MODIS Land Surface Temperature: Mean across county and most recent USDA FS panel (◦C)](results/fig_lst.png)
 
+NASA MODIS NDVI: Mean across county and most recent USDA FS panel (◦C)
 ![NASA MODIS NDVI: Mean across county and most recent USDA FS panel (◦C)](results/fig_ndvi.png)
 
+NASA MODIS Land Surface Temperature: Consecutive months below average NDVI per year across county and most recent USDA FS panel (◦C)
 ![NASA MODIS Land Surface Temperature: Consecutive months below average NDVI per year across county and most recent USDA FS panel (◦C)](results/fig_cmbm.png)
 
 ## Results: Parameter selection
@@ -33,6 +37,7 @@ I use LASSO regularization paths to first visualize, then identify the importanc
 
 Here I observe several key variables emerge with high coefficients under a high regularization constant (left-most side of the graph), and their coefficients continue to increase as the regularization constant decreases (moving right along the graph). The six variables that emerge strongest are the LST consecutive months below the mean, NDVI mean annual standard deviation, LST mean annual standard deviation, LST mean annual minimum, NDVI standard deviation of the annual mean, and NDVI standard deviation of the annual maximum.
 
+Lasso path parameter selection
 ![Lasso path parameter selection](results/fig_lasso.png)
 
 ## Results: Model selection
@@ -45,11 +50,17 @@ My data splitting scenarios resulted in a test dataset of `10%` at random for co
 In all three of my splitting regimes, I find that my selected models perform well. In each case, RMSE is not significantly higher than it was in my cross validaiton exercise, giving me confidence that these models are likely not overfit. RMSE on the test dataset was `1136`, `1547`, and `1596` short tons / km2 respectively; R2 was `0.92`, `0.74`, and `0.89` respectively; and MAE was `822`, `1109`, and `1068` short tons / km2 respectively.
 
 ### Performance on test data
+Performance on test data for county K-fold
 ![Performance on test data for county K-fold](results/fig_regcounty.png)
+Performance on test data for state LOO
 ![Performance on test data for state LOO](results/fig_regstate.png)
+Performance on test data for future prediction
 ![Performance on test data for future prediction](results/fig_regfuture.png)
 
 ### Histograms of predictions
+Histogram of forest biomass predictions for county K-fold
 ![Histogram of forest biomass predictions for county K-fold](results/fig_histcounty.png)
+Histogram of forest biomass predictions for state LOO
 ![Histogram of forest biomass predictions for state LOO](results/fig_histstate.png)
+Histogram of forest biomass predictions for future prediction
 ![Histogram of forest biomass predictions for future prediction](results/fig_histfuture.png)
